@@ -28,12 +28,12 @@ export async function signin(req, res) {
                 //password correct, now sign a token send to the front end
                 console.log("existing user:", existingUser);
                 const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'test', { expiresIn: JWT_EXPIRY_PERIOD })
-                res.status(200).json({ result: existingUser, token })
+                return res.status(200).json({ result: existingUser, token })
             }
         }
 
     } catch (error) {
-        res.json({ message: `some error on server --- ${error}` })
+        return res.json({ message: `some error on server --- ${error}` })
     }
 
 
@@ -53,7 +53,7 @@ export async function signup(req, res) {
         const existingUser = await user.findOne({ email })
         
         if (existingUser) {
-            res
+            return res
             // .status(400)
             .json({ message: "User already exists" })
         }
@@ -61,7 +61,7 @@ export async function signup(req, res) {
         else {
 
             if (password !== confirmPassword) {
-                res
+                return res
                 // .status(400)
                 .json({ message: "Password and confrom password don't match" })
             }
@@ -76,7 +76,7 @@ export async function signup(req, res) {
                 newUser.save().then((savedNewUser) => {
                     const token = jwt.sign({ email: savedNewUser.email, id: savedNewUser._id }, 'test', { expiresIn: "1h" })
 
-                    res.status(200).json({ result:savedNewUser, token })
+                    return res.status(200).json({ result:savedNewUser, token })
 
                     console.log(user.find({}).then((foundUsers)=>{
                         console.log("foundUsers\n",foundUsers);
@@ -91,7 +91,7 @@ export async function signup(req, res) {
             }
         }
     } catch (err) {
-        res.status(500).json({message:"some error in signup server side :", err})
+        return res.status(500).json({message:"some error in signup server side :", err})
     }
 
     // if exists then send 400

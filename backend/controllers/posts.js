@@ -69,7 +69,7 @@ export const createPost = async (req, res) => {
                 console.log("saved", saved);
                 return res.status(201).json(saved)
             }).catch((err) => {
-                res.status(500).json({message:`error in creating post server side: ${err}`})
+                return res.status(500).json({message:`error in creating post server side: ${err}`})
                 console.log("error in saving, ", err);
             })
 
@@ -79,7 +79,7 @@ export const createPost = async (req, res) => {
             // })
 
         } catch (error) {
-            res.status(500).json({message:`error in creating post server side: ${error}`})
+            return res.status(500).json({message:`error in creating post server side: ${error}`})
             console.log("some error,", error);
         }
     }
@@ -320,9 +320,9 @@ export async function getPostsBySearchQuery (req, res) {
             {$or: dbQuery }
         ).then((matchingPosts)=>{
             console.log("matched posts are - " + matchingPosts);
-            res.status(200).json(matchingPosts)
+            return res.status(200).json(matchingPosts)
         }).catch((error)=>{
-            res.status(500).json({message:`error in searching: ${error}`})
+            return res.status(500).json({message:`error in searching: ${error}`})
         })
 
     } catch (error) {
