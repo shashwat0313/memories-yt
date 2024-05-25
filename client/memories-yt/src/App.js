@@ -1,85 +1,54 @@
 import React, { useEffect, useState } from 'react'
+import { Container } from '@material-ui/core'
 
-//mui version 5 only
-// import { Container, Typography, Grow, Grid } from '@mui/material'
-// import { AppBar } fr om './styles'
+import Navbar from './components/Navbar/Navbar'
+import Home from './components/Home/Home'
+import Auth from './components/Auth/Auth'
+import PostDetails from './components/PostDetails/PostDetails'
 
-import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core'
-import memories from './images/memories.png'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { jwtDecode, verify } from 'jwt-decode'
 
-import Posts from './components/Posts/Posts'
-import Form from './components/Form/Form'
-
-import useStyles from './styles'
-
-import { useDispatch, useSelector } from 'react-redux'
-import { getPosts } from './actions/posts'
 function App() {
 
-  // const [text, setText] = useState("yess")
-  // //for testing
-  // useEffect(() => {
-  //   fetch('/test').then((res) => {
-  //     console.log(res);
-  //     res.json().then((newres) => {
-  //       console.log(newres);
-  //       setTimeout(() => {
-  //         setText(newres)
-  //       }, 1000);
-  //     })
-  //   })
-  // }, [])
+  const [user, setUser] = useState(localStorage.getItem('profile'))
 
-
-  /* ******************************************************* */
-  // DO NOT PERFORM THIS ACTION OUTSIDE OF "App" component
-  const classes = useStyles()
-
-  /* ******************************************************* */
-
-  const [currentId, setCurrentId] = useState(null)
-
-  const dispatch = useDispatch()
-
-  const posts = useSelector((state) => {
-    return state.posts
-  })
+  // const user = localStorage.getItem('profile')
 
   useEffect(() => {
-    dispatch(getPosts())
-  }, [dispatch, currentId])
+    // setUser(JSON.parse(localStorage.getItem('profile')))
+    const token = user ? user.token : null
+    if (token) {
+      const decodedToken = jwtDecode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        localStorage.removeItem('profile');
+      }
+    }
+  }, [user]);
 
   return (
 
-    <div className="App">
+    <BrowserRouter>
 
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
 
-        <Grow in>
-          <Container>
+        <Navbar />
 
-            <Grid container className={classes.mainContainer} justifyContent="space-between" alignItems="stretch" spacing={3}>
-              {
-              /*  * xs means it will take full width(12/12) on extra small devices 
-                  * sm means it will take (7/12) width on small devices
-                  * there a total of 12 columns in the grid system, so 7/12 is a fraction of the total width of 12
-              */}
-              <Grid item xs={12} sm={7}>
-                <Posts setCurrentId={setCurrentId} />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Form currentId={currentId} setCurrentId={setCurrentId} />
-              </Grid>
+        <Switch>
 
-            </Grid>
+          <Route path="/" exact component={()=><Redirect to='/posts' />}></Route>
+          <Route path="/posts" exact component={Home} />
+          <Route path="/posts/search" exact component={Home} />
+          <Route path="/posts/:id" component={PostDetails} />
+          <Route path="/auth" exact component={() => !user ? <Auth/> : <Redirect to="/posts" />}></Route>
 
-
-          </Container>
-        </Grow>
+        </Switch>
 
       </Container>
+    </BrowserRouter>
 
-    </div>
+
   );
 }
 

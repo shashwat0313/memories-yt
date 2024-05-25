@@ -1,3 +1,4 @@
+import './index.css'
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -7,7 +8,6 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { thunk } from 'redux-thunk'
 import reducers from './reducers'
-import './index.css'
 
 // const reduxStore = createStore(compose(applyMiddleware(thunk)))
 const reduxStore = createStore(reducers, compose(applyMiddleware(thunk)))

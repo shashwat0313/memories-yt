@@ -1,11 +1,13 @@
 import * as api from '../api'
-import {FETCH_ALL, UPDATE, LIKE, DELETE, CREATE} from '../constants/actionTypes'
+import {FETCH_ALL, UPDATE, LIKE, DELETE, CREATE, SEARCH} from '../constants/actionTypes'
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
     try {
         //fetch the posts through the api
-        const { data } = await api.fetchPosts();
-        dispatch({type: FETCH_ALL, payload:data})
+        console.log("getposts action creator called");
+        const response = await api.fetchPosts(page);
+        console.log("getposts response:", response);
+        dispatch({type: FETCH_ALL, payload:response.data})
     } catch (error) {
         console.error("getPosts action creator has some error: ", error);
     }
@@ -41,7 +43,7 @@ export const deletePost = (id) => async(dispatch) => {
     try {
         const response = await api.deletePost(id);
         console.log("Response from delete request:", response);
-        dispatch({type:DELETE, payload:id})
+        dispatch({type:DELETE, payload:{id}})
     } catch (error) {
         console.log("some error occured with delete action creator:", error)
     }
@@ -50,10 +52,24 @@ export const deletePost = (id) => async(dispatch) => {
 export const likePost = (id) => async (dispatch) => {
     try {
         const response = await api.likePost(id)
-        console.log("response form like request:", response);
+        console.log("response from like request:", response);
         dispatch({type:LIKE, payload:response.data})
     } catch (error) {
         console.log("some error occured with like post action creator:", error);
+    }
+}
+
+export const getPostsBySearchQuery = (query) => async (dispatch) =>{
+    // console.log("inside action creator");
+    try { 
+        //make api call to backend
+        console.log("action creator getpostsbysearchq_api called");
+        console.log("query received is:", query);
+        const data = await api.getPostsBySearchQuery_api(query)
+        console.log("response by getpostsbysq_api(.data):", data.data);
+        dispatch({type:SEARCH, payload:data.data})
+    } catch (error) {
+        console.log("some error occured in searchpost action creator");
     }
 }
 

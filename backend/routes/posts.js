@@ -2,18 +2,22 @@
 
 import express from 'express';
 
-//import controller
-import { getPosts, createPost, updatePost, deletePost, likePost } from '../controllers/posts.js';
+//import controllers
+import { getPosts, createPost, updatePost, deletePost, likePost, getPostsBySearchQuery } from '../controllers/posts.js';
 
-//import model
-import postmessage from '../models/postMessage.js';
+// import authentication middleware, it will dump unauthenticated requests if made to protected routes
+import isAuthenticated from '../middleware/auth.js'
 
 const postRouter = express.Router();
 
+// open routes
 postRouter.get('/', getPosts)
-postRouter.post('/', createPost)
-postRouter.patch('/:id', updatePost)
-postRouter.patch('/:id/likepost', likePost)
-postRouter.delete('/:id', deletePost)
+postRouter.get('/search', getPostsBySearchQuery)
+
+// added isAuthenticated middleware to protected routes
+postRouter.post('/',isAuthenticated, createPost)
+postRouter.patch('/:id',isAuthenticated, updatePost)
+postRouter.patch('/:id/likepost',isAuthenticated, likePost)
+postRouter.delete('/:id',isAuthenticated, deletePost)
 
 export default postRouter;

@@ -1,19 +1,49 @@
 import axios from 'axios'
 
-const postsURL = "http://10.7.223.89:5555/posts"
+// setting a base url to hit using an axios instance
 
-// const postsURL = "http://localhost:5555/posts"
+// replace the ip address below with current ip address for testing on other devices on local network
+const baseURL = "http://localhost:5555"
+
+const API = axios.create({ baseURL })
+// now requests can be called directly on this axios instance
+// no need to do axios.get(__fullURL__ **just the endpoint, since the baseURL will be prepended internally)
+// do this ... API.get(...) 
+
+// interceptor
+API.interceptors.request.use((req) => {
+    const profile = JSON.parse(localStorage.getItem('profile'))
+    console.log("profile given to interceptor:",profile);
+    if (profile) {
+        req.headers.Authorization = `Bearer ${profile.token}`
+        console.log("auth header:", req.headers.Authorization);
+    }
+    console.log("HELLLOOOO");
+    return req;
+})
+
+const postsEndpoint = "/posts"
+const signinEndpoint = "/user/signin"
+const signupEndpoint = "/user/signup"
+const searchPostsEndpoint = "/posts/search"
 
 // this function fetches posts from the server
 // this function is called by the action creator
 // this is asynchronous, after its completion, 
 // the action object is dispatched to the redux store through the action creator(which is the one that calls this function)
-export const fetchPosts = () => axios.get(postsURL)
+export const fetchPosts = (page) => {console.log("page received by fetchposts api:", page);return API.get(postsEndpoint + '?page=' + page)} 
 
-export const createPost = (newPost) => axios.post(postsURL, newPost)
+export const createPost = (newPost) => API.post(postsEndpoint, newPost)
 
-export const updatePost = (id, updatedPost) => axios.patch(`${postsURL}/${id}`, updatedPost)
+export const updatePost = (id, updatedPost) => API.patch(`${postsEndpoint}/${id}`, updatedPost)
 
-export const likePost = (id) => axios.patch(`${postsURL}/${id}/likepost`)
+export const likePost = (id) => API.patch(`${postsEndpoint}/${id}/likepost`)
 
-export const deletePost = (id) => axios.delete(`${postsURL}/${id}`)
+export const deletePost = (id) => API.delete(`${postsEndpoint}/${id}`)
+
+// the makeup of this URL is crucial
+export const getPostsBySearchQuery_api = (query) => API.get(`${searchPostsEndpoint}?searchQuery=${query.searchQuery || null}&tagsQuery=${query.tagsQuery}`)
+
+//for login actions
+export const signin = (loginFormData) => API.post(signinEndpoint, loginFormData)
+export const signup = (signupFormData) => API.post(signupEndpoint, signupFormData)

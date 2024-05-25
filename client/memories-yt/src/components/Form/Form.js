@@ -9,10 +9,12 @@ export default function Form({ currentId, setCurrentId}) {
 
     //these classes will be applied later
     const classes = useStyles()
+    const user = localStorage.getItem('profile')
+    console.log(user);
 
     const [postData, setFormPostData] = useState(
         {
-            creator: '',
+            creatorName: '',
             title: '',
             message: '',
             tags: '',
@@ -24,8 +26,9 @@ export default function Form({ currentId, setCurrentId}) {
     // In other words, if the part of the state your selector function is looking at changes, your component will re-render.
     //2. the cb function is run on every re-render
     const postToBeUpdated = useSelector((state) => {
+        console.log("state(form component):", state);
         if (currentId) {
-            return state.posts.find(
+            return state.posts.posts.find(
                 (post) => post._id === currentId
             )
         } else return null;
@@ -62,7 +65,7 @@ export default function Form({ currentId, setCurrentId}) {
         setCurrentId(null)
         setFormPostData(()=>{
             return {
-                creator: '',
+                creatorName: '',
                 title: '',
                 message: '',
                 tags: '',
@@ -73,7 +76,7 @@ export default function Form({ currentId, setCurrentId}) {
 
     return (
 
-        <Paper className={classes.paper}>
+        user ? <Paper className={classes.paper}>
             <form autoComplete="off" noValidate className={`${classes.form} ${classes.root}`} onSubmit={submitHandler}>
                 <Typography variant="h6">
                     {currentId ? "Editing " : "Creating"} a Memory
@@ -81,12 +84,13 @@ export default function Form({ currentId, setCurrentId}) {
 
                 <TextField name="creator" variant="outlined" label="Creator" fullWidth
 
-                    value={postData.creator}
+                    value={postData.creatorName}
                     onChange={(e) => {
+                        console.log(e.target);
                         // obviously, not having the spread operator here would cause the loss of the other properties
                         // spread operator is used to copy the existing properties of the object
                         // it is nice shorthand, instead of writing all the properties of the object over or using complicated stuff
-                        setFormPostData({ ...postData, creator: e.target.value })
+                        setFormPostData({ ...postData, creatorName: e.target.value })
                     }}
 
                 ></TextField>
@@ -142,6 +146,11 @@ export default function Form({ currentId, setCurrentId}) {
                 <Button variant="contained" color="secondary" size="small" onClick={clearForm} >Clear</Button>
 
             </form>
+        </Paper> : 
+        <Paper className={classes.paper}>
+            <Typography variant="h6" align="center">
+                Please sign in to create your own memories and like other's memories.
+            </Typography>
         </Paper>
     )
 }

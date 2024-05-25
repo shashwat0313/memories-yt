@@ -8,6 +8,7 @@ dotenv.config()
 
 //import routes
 import postRoutes from './routes/posts.js'
+import userRoutes from './routes/users.js'
 
 // port to run server on
 const port = process.env.PORT || 5555
@@ -40,6 +41,7 @@ mongoose.connect(mongoURL).then(() => {
 //mongodbdriver says usenewurlparser and useunifiedtopology have no longer any effects
 
 app.use('/posts', postRoutes)
+app.use('/user', userRoutes)
 
 // for testing
 app.get('/test', (req, res) => {
