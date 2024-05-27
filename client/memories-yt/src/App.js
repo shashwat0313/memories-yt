@@ -21,13 +21,13 @@ function App() {
   const dispatch = useDispatch()
 
   const user = useSelector((state)=>{
-    console.log("appjs state.auth.authData:",state.auth.authData);
+    // console.log("appjs state.auth.authData:",state.auth.authData);
     return (state.auth.authData);
   })
 
   useEffect(() => {
     // setUser(JSON.parse(localStorage.getItem('profile')))
-    console.log('user in appjs:', user ? user : "not found");
+    // console.log('user in appjs:', user ? user : "not found");
     const token = user ? user.token : null
     if (token) {
       const decodedToken = jwtDecode(token);

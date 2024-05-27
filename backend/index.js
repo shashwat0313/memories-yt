@@ -3,6 +3,7 @@ import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from'dotenv'
+import corsConfig from './corsConfig.js'
 
 dotenv.config()
 
@@ -21,7 +22,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }))
 
 // invoke cors
 //  Note: at the time of writing(11 feb '23), even without invoking cors, the project was working fine (on localhost)
-app.use(cors())
+app.use(cors(corsConfig))
 
 // set up mongodb connection
 const mongoURL = process.env.MONGO_URL

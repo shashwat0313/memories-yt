@@ -11,42 +11,49 @@ export default function Navbar() {
 
     const classes = useStyles()
     const history = useHistory()
-    const [user, setUser] = useState(
-        JSON.parse(
-            localStorage.getItem('profile')
-        )
-    )
+    // const [user, setUser] = useState(
+    //     JSON.parse(
+    //         localStorage.getItem('profile')
+    //     )
+    // )
     // const [user, setUser] = useState(null)
     const dispatch = useDispatch()
     const location = useLocation()
 
 
-    useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('profile')))
-        // console.log("user:", user);
-        // // console.log("jwtDecode(user?.token).exp=", jwtDecode(user?.token).exp);
+    const user = useSelector((state)=> state?.auth?.authData)
+    // const user = localStorage.getItem('profile')
 
-        // if (user) {
-        //     const exp = jwtDecode(user?.token).exp;
-        //     console.log("jwtDecode(user?.token)=", jwtDecode(user?.token));
-        //     if (exp * 1000 < new Date().getTime()) {
-        //         handleLogout(null)
-        //     }
+    // useEffect(()=>{
 
-        // }
+    // }, [location])
 
-        // I cannot remember why location is a dependency
-    }, [location])
+    // useEffect(() => {
+    //     setUser(JSON.parse(localStorage.getItem('profile')))
+    //     // console.log("user:", user);
+    //     // // console.log("jwtDecode(user?.token).exp=", jwtDecode(user?.token).exp);
 
-    // const user2 = useSelector((state)=>{
-    //     console.log(state.auth);
-    //     console.log("state authdata in navbar user2", JSON.parse(state.auth.authData));
-    // })
+    //     // if (user) {
+    //     //     const exp = jwtDecode(user?.token).exp;
+    //     //     console.log("jwtDecode(user?.token)=", jwtDecode(user?.token));
+    //     //     if (exp * 1000 < new Date().getTime()) {
+    //     //         handleLogout(null)
+    //     //     }
+
+    //     // }
+
+    //     // I cannot remember why location is a dependency
+    // }, [location])
+
+    // // const user2 = useSelector((state)=>{
+    // //     console.log(state.auth);
+    // //     console.log("state authdata in navbar user2", JSON.parse(state.auth.authData));
+    // // })
 
     function handleLogout(e) {
         if (e) e.preventDefault();
         dispatch({ type: 'LOGOUT' })
-        setUser(null)
+        // setUser(null)
         history.push('/')
     }
 
@@ -74,11 +81,11 @@ export default function Navbar() {
                 {user ? (
                     <div className={classes.profile}>
                         <Avatar className={classes.purple}
-                            alt={user?.result.name}
+                            alt={user?.result?.name}
                             src={user?.result?.picture}
                         >
                             {/* NAME'S FIRST LETTER GOES HERE */}
-                            {(user?.result.name).charAt(0)}
+                            {(user?.result?.name).charAt(0)}
                         </Avatar>
                         <Typography className={classes.userName} variant='h6'>
                             {user?.result.name}

@@ -3,6 +3,8 @@ import { Button } from '@material-ui/core'
 // import jwt from 'jsonwebtoken'
 import { jwtDecode } from 'jwt-decode'
 
+import { useSelector } from 'react-redux';
+
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 
@@ -33,9 +35,14 @@ const GoogleButton = ({ googleSuccess }) => {
     const [loaded, setLoadState] = useState(false)
     const [isSignedIn, setIsSignedIn] = useState(localStorage.getItem('profile') ? true : false)
 
+    const user = useSelector((state)=>{
+        console.log("appjs state.auth.authData:",state.auth.authData);
+        return (state.auth.authData);
+    })
+
     useEffect(() => {
         console.log("issignedin=", isSignedIn);
-        if (isSignedIn === true) {
+        if (user) {
             window.location.href = '/'
         }
         const googleScriptTag = document.createElement('script')
@@ -45,7 +52,7 @@ const GoogleButton = ({ googleSuccess }) => {
             console.log('google accounts script loaded');
         })
         document.body.appendChild(googleScriptTag)
-    }, [isSignedIn])
+    }, [user])
 
     useEffect(() => {
         if (!loaded) { return }

@@ -3,7 +3,19 @@ import axios from 'axios'
 // setting a base url to hit using an axios instance
 
 // replace the ip address below with current ip address for testing on other devices on local network
-const baseURL = "http://localhost:5555"
+// const baseURL = process.env.NODE_ENV === 'develpment' ? "http://192.168.29.215:5555" :
+
+let baseURL;
+
+if(process.env.NODE_ENV === 'development'){
+    baseURL = 'http://192.168.29.215:5555'
+}
+else if(process.env.NODE_ENV === 'localdev'){
+    baseURL = 'http://localhost:5555'
+}
+else if (process.env.NODE_ENV === 'production'){
+    // TODO --- MENTION PRODUCTION URL HERE
+}
 
 const API = axios.create({ baseURL })
 // now requests can be called directly on this axios instance
@@ -16,9 +28,9 @@ API.interceptors.request.use((req) => {
     console.log("profile given to interceptor:",profile);
     if (profile) {
         req.headers.Authorization = `Bearer ${profile.token}`
-        console.log("auth header:", req.headers.Authorization);
+        // console.log("auth header:", req.headers.Authorization);
     }
-    console.log("HELLLOOOO");
+    // console.log("HELLLOOOO");
     return req;
 })
 
