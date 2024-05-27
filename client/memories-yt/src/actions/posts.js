@@ -1,13 +1,20 @@
 import * as api from '../api'
-import {FETCH_ALL, UPDATE, LIKE, DELETE, CREATE, SEARCH} from '../constants/actionTypes'
+import {FETCH_ALL, UPDATE, LIKE, DELETE, CREATE, SEARCH, START_LOADING, END_LOADING} from '../constants/actionTypes'
 
 export const getPosts = (page) => async (dispatch) => {
     try {
-        //fetch the posts through the api
+
+        // start loading
+        dispatch({type:START_LOADING}) 
+        
+        // fetch the posts through the api
         console.log("getposts action creator called");
         const response = await api.fetchPosts(page);
         console.log("getposts response:", response);
         dispatch({type: FETCH_ALL, payload:response.data})
+
+        // end loading
+        dispatch({type:END_LOADING}) 
     } catch (error) {
         console.error("getPosts action creator has some error: ", error);
     }
@@ -17,12 +24,16 @@ export const getPosts = (page) => async (dispatch) => {
 //this is a function that returns a function(a function that is async) which in the end returns an action through dispatch
 export const createPost = (newPost) => async (dispatch) => {
     try {
+        dispatch({type:START_LOADING}) 
 
         // this calls the api to create a post
         // the api then calls axios' post to make a post request to the server
         const { data } = await api.createPost(newPost)
         console.log("data got from reponse on post request: ", data);
         dispatch({type:CREATE, payload:data})
+        
+        // end loading
+        dispatch({type:END_LOADING}) 
 
     } catch (error) {
         console.log("error in createpost action creator : ", error);
@@ -62,12 +73,19 @@ export const likePost = (id) => async (dispatch) => {
 export const getPostsBySearchQuery = (query) => async (dispatch) =>{
     // console.log("inside action creator");
     try { 
+
+        dispatch({type:START_LOADING}) 
+
         //make api call to backend
         console.log("action creator getpostsbysearchq_api called");
         console.log("query received is:", query);
         const data = await api.getPostsBySearchQuery_api(query)
         console.log("response by getpostsbysq_api(.data):", data.data);
         dispatch({type:SEARCH, payload:data.data})
+
+        // end loading
+        dispatch({type:END_LOADING}) 
+                
     } catch (error) {
         console.log("some error occured in searchpost action creator");
     }

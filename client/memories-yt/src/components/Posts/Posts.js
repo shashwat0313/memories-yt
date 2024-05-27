@@ -14,11 +14,15 @@ export default function Posts({ setCurrentId }) {
     // useselector gives access to the global store of states
     // the state object which appears as the param is the object
     const posts = useSelector((state) => {
-        console.log("state: ", state);
+        console.log("state(posts component): ", state);
         return state.posts.length === 0 ? null : state.posts.posts
     })
 
-    console.log(posts, "xyz");
+    const isLoading = useSelector((state) => {
+        return state.posts.isLoading;
+    })
+
+    console.log(posts, "posts");
 
     // useEffect(()=>{
     //     if(posts){
@@ -34,25 +38,25 @@ export default function Posts({ setCurrentId }) {
     // if the posts array  is empty, i.e. not yet fetched then the loading anim will be shown
     // the moment the state is updated and we have >0 posts, the posts will be displayed
 
-    // if (!isLoading)
-        return (!posts?.length ? <CircularProgress /> :
-            <>
-                <Grid className={classes.mainContainer} container alignItems="stretch" spacing="3">
-                    {
-                        //this snippet is a bit elongated, it can be shortened but shortening will be done later
-                        posts.map((post) => {
-                            return (
-                                <Grid key={post._id} item xs={12} sm={12} md={6} lg={3} >
-                                    <Post post={post} setCurrentId={setCurrentId}></Post>
-                                </Grid>
-                            )
-                        }
 
+    if(!posts.length && !isLoading) return 'No Posts';
+
+    return (isLoading ? <CircularProgress /> :
+        <>
+            <Grid className={classes.mainContainer} container alignItems="stretch" spacing="3">
+                {
+                    //this snippet is a bit elongated, it can be shortened but shortening will be done later
+                    posts.map((post) => {
+                        return (
+                            <Grid key={post._id} item xs={12} sm={12} md={6} lg={3} >
+                                <Post post={post} setCurrentId={setCurrentId}></Post>
+                            </Grid>
                         )
                     }
-                </Grid>
-            </>)
 
-    // else return (<>Loading</>)
+                    )
+                }
+            </Grid>
+        </>)
 
 }

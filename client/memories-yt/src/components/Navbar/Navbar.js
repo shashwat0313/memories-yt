@@ -4,7 +4,7 @@ import useStyles from './styles';
 import memoriesText from '../../images/memories-Text.png'
 import memoriesLogo from '../../images/memories-Logo.png'
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { jwtDecode } from 'jwt-decode';
 
 export default function Navbar() {
@@ -20,13 +20,28 @@ export default function Navbar() {
     const dispatch = useDispatch()
     const location = useLocation()
 
-    console.log("user:", user);
-    console.log("user.result.name=", user?.result.name);
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('profile')))
+        // console.log("user:", user);
+        // // console.log("jwtDecode(user?.token).exp=", jwtDecode(user?.token).exp);
+
+        // if (user) {
+        //     const exp = jwtDecode(user?.token).exp;
+        //     console.log("jwtDecode(user?.token)=", jwtDecode(user?.token));
+        //     if (exp * 1000 < new Date().getTime()) {
+        //         handleLogout(null)
+        //     }
+
+        // }
+
         // I cannot remember why location is a dependency
     }, [location])
+
+    // const user2 = useSelector((state)=>{
+    //     console.log(state.auth);
+    //     console.log("state authdata in navbar user2", JSON.parse(state.auth.authData));
+    // })
 
     function handleLogout(e) {
         if (e) e.preventDefault();
@@ -34,18 +49,6 @@ export default function Navbar() {
         setUser(null)
         history.push('/')
     }
-
-    // useEffect(() => {
-    //     const user = JSON.parse(localStorage.getItem('profile'))
-    //     const token = user ? user.token : null
-    //     if (token) {
-    //         const decodedToken = jwtDecode(token);
-
-    //         if (decodedToken.exp * 1000 < new Date().getTime()) {
-    //             handleLogout(null)
-    //         }
-    //     }
-    // }, [user]);
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
@@ -56,8 +59,8 @@ export default function Navbar() {
                 {/* Memories */}
                 {/* </Typography> */}
                 <Link to='/' className={classes.brandContainer}>
-                        <img className={classes.image} src={memoriesText} alt="memories" height="60" />
-                        <img className={classes.image} src={memoriesLogo} alt="memories" height="60" />
+                    <img className={classes.image} src={memoriesText} alt="memories" height="60" />
+                    <img className={classes.image} src={memoriesLogo} alt="memories" height="60" />
                 </Link>
 
             </div>

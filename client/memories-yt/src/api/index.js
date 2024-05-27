@@ -31,7 +31,7 @@ const searchPostsEndpoint = "/posts/search"
 // this function is called by the action creator
 // this is asynchronous, after its completion, 
 // the action object is dispatched to the redux store through the action creator(which is the one that calls this function)
-export const fetchPosts = (page) => {console.log("page received by fetchposts api:", page);return API.get(postsEndpoint + '?page=' + page)} 
+export const fetchPosts = (page) => {console.log("page received by fetchposts api:", page); return API.get( `${postsEndpoint}?page=${page}` )} 
 
 export const createPost = (newPost) => API.post(postsEndpoint, newPost)
 

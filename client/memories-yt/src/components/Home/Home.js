@@ -5,7 +5,6 @@ import { getPosts } from '../../actions/posts'
 import Posts from '../Posts/Posts'
 import Form from '../Form/Form'
 import { useDispatch } from 'react-redux'
-// import {Pagination} from '../pagination'
 import { useHistory, useLocation } from 'react-router-dom'
 import ChipInput from 'material-ui-chip-input'
 
@@ -27,24 +26,27 @@ export default function Home() {
     //NOTE THAT THIS USEEFFECT **MUST NOT** BE WRITTEN BEFORE DISPATCH IS DEFINED
     // THIS IS ERROR IS NOT CAUGHT CLEARY BY THE WEBPACK COMPILER
     // IT IS CAUGHT AT RUNTIME WITHOUT LINE NUMBERS
-    useEffect(() => {
-        dispatch(getPosts(page))
-    }, [])
-
+    // well this should be obvious right?
+    
     //THERE IS SOME CONFUSION WITH VARIABLE NAMES CONTAINING SEARCH AND QUERY
-
+    
     const history = useHistory()
-
+    
     // URL query params
     const query = useQuery()
     const page = query.get('page') || 1
-
+    
     const searchQuery = query.get('searchQuery')
     console.log("searchQuery=",searchQuery);
     
     console.log("history=", history);
     console.log("query=", query);
     console.log("page=", page);
+    
+        useEffect(() => {
+            dispatch(getPosts(page))
+        // eslint-disable-next-line
+        }, [page])
     
     // this state var contains the searched keyword(s)
     const [searchKeyword, setSearchKeyword] = useState("")
@@ -90,19 +92,7 @@ export default function Home() {
             dispatch(getPostsBySearchQuery({ searchQuery: searchKeyword, tagsQuery: tags.join(',') }))
             history.push(`/posts/search?searchQuery=${searchKeyword}&tagsQuery=${tags}`)
         }
-
-        // if (trimmedSearchText) {
-        //     console.log("dispatch to getpostsbysearchquery called");
-        //     dispatch(getPostsBySearchQuery({ searchQuery: searchKeyword, tagsQuery: tags.join(',') }))
-        // }
-        // else {
-        //     // window.alert("what?! at least write something in the search box!")
-        //     if (tags.length > 0) {
-        //         console.log("inside else");
-        //         dispatch(getPostsBySearchQuery({ searchQuery: '', tagsQuery: tags.join(',') }))
-        //     }
-        //     else history.push('/')
-        // }
+        
     }
 
     return (
@@ -150,7 +140,6 @@ export default function Home() {
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                         <Paper
-                            //   className={classes.pagination}
                             elevation={6}>
                             <Paginate page={page}/>
                         </Paper>

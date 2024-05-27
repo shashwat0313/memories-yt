@@ -1,16 +1,18 @@
 import {LOGIN, LOGOUT, AUTH} from '../constants/actionTypes'
 
-export default function auth (state = {authData:null}, action){
+export default function auth (state = {authData:localStorage.getItem('profile')}, action){
     switch (action.type) {
         //for manual log in
         case AUTH:
             console.log("auth data:", action);
+            alert("auth data: " + JSON.stringify(action));
             localStorage.setItem('profile', JSON.stringify(action?.data))
             return {...state, authData:action?.data};
         
         // for google log in
         case LOGIN:
             console.log("auth data:", action);
+            alert("auth data: " + JSON.stringify(action));
             localStorage.setItem('profile', JSON.stringify(action?.data))
             return {...state, authData:action?.data};
     

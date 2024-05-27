@@ -15,16 +15,18 @@ export const getPosts = async (req, res) => {
 
     
     try {
+        const postCount = await postmessage.countDocuments()
+
         if(page === undefined || Number(page) === 0){
             const pm = await postmessage.find({}).sort({_id:-1}).limit(LIMIT)
-            return res.status(200).json(pm)
+            // return res.status(200).json(pm);
+            return res.status(200).json(({data:pm, currentpage:1, totalPages: postCount}));
         }
         
         // Impl. to send only a limited number of posts to the front end, based on the value of page variable
 
         // page 0 -> index 0[beginIndex below] -> send 0 to 7, page 2 -> index (2-1)*8 = 8 -> send 8 to 15, and so on
         const beginIndex = (Number(page) - 1) * LIMIT
-        const postCount = await postmessage.countDocuments()
         
         // if(beginIndex + LIMIT < postCount){
         //     //handle differently maybe?

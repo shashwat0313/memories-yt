@@ -16,17 +16,24 @@ export default function Paginate({page}) {
             //dispatch
             dispatch(getPosts(page))
         }
+        // eslint-disable-next-line
     },[page])
+
+    // NOTE THAT USESELECTOR HAS SOME ISSUE WHILE TRYING TO RETURN VALUES. IT CAN  ONLY RETURN OBJECTS.
+    // IT DID NOT WORK IN MY CASE AT LEAST
+    const posts = useSelector((state)=>{return state.posts;})
+
+    console.log("state(pagination)", posts);
 
     return (
 
         <Pagination
             classes={{ul: classes.ul}}
-            count={5}
-            page={1}
+            count={ posts.totalPages }
+            page={Number(page) || 1}
             variant="outlined"
-            color="primary"
-            renderItem={(item)=>(<PaginationItem  {...item} component={Link} to={`/posts?page=${1}`}/>)}
+            color="primary" 
+            renderItem={(item)=>(<PaginationItem  {...item} component={Link} to={`/posts?page=${item.page}`}/>)}
         
         />
 
