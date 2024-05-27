@@ -9,8 +9,13 @@ export default function Form({ currentId, setCurrentId}) {
 
     //these classes will be applied later
     const classes = useStyles()
-    const user = localStorage.getItem('profile')
-    console.log(user);
+    // const user = localStorage.getItem('profile')
+    // console.log(user);
+
+    const user = useSelector((state)=>{
+        // console.log("appjs state.auth.authData:",state.auth.authData);
+        return (state.auth.authData);
+      })
 
     const [postData, setFormPostData] = useState(
         {
@@ -26,7 +31,7 @@ export default function Form({ currentId, setCurrentId}) {
     // In other words, if the part of the state your selector function is looking at changes, your component will re-render.
     //2. the cb function is run on every re-render
     const postToBeUpdated = useSelector((state) => {
-        console.log("state(form component):", state);
+        // console.log("state(form component):", state);
         if (currentId) {
             return state.posts.posts.find(
                 (post) => post._id === currentId
@@ -86,7 +91,7 @@ export default function Form({ currentId, setCurrentId}) {
 
                     value={postData.creatorName}
                     onChange={(e) => {
-                        console.log(e.target);
+                        // console.log(e.target);
                         // obviously, not having the spread operator here would cause the loss of the other properties
                         // spread operator is used to copy the existing properties of the object
                         // it is nice shorthand, instead of writing all the properties of the object over or using complicated stuff

@@ -90,7 +90,11 @@ export default function Home() {
         }
         if(trimmedSearchText || tags){
             dispatch(getPostsBySearchQuery({ searchQuery: searchKeyword, tagsQuery: tags.join(',') }))
-            history.push(`/posts/search?searchQuery=${searchKeyword}&tagsQuery=${tags}`)
+
+            // DECIDED TO NOT PUSH THIS TO HISTORY AS IT WAS CAUSING ISSUES WITH RENDERING WHEN AVAILING THE SEARCH FEATURE 
+
+            // history.push(`/posts/search?searchQuery=${searchKeyword}&tagsQuery=${tags}`)
+
         }
         
     }
