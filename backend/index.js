@@ -43,6 +43,7 @@ mongoose.connect(mongoURL).then(() => {
 
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
+// app.use('/post/:id', getPost)
 
 // for testing
 app.get('/test', (req, res) => {

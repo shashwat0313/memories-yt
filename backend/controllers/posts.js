@@ -51,6 +51,20 @@ export const getPosts = async (req, res) => {
     }
 }
 
+export async function getPost(req, res) {
+    // const id = req.params
+    console.log(req.params);
+
+    const {id} = req.params
+
+    postmessage.findById(id).then((post)=>{
+        console.log("post found in fetchpost:", post);
+        return res.status(200).json(post)
+    }).catch((err)=>{
+        return res.status(500).json({msg:"some error while finding the posr", errorMessage:err});
+    })
+}
+
 //a form is there on the frontend to send a post request on this endpoint
 export const createPost = async (req, res) => {
     const post = req.body;

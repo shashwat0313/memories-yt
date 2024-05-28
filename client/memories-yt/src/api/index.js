@@ -38,12 +38,15 @@ const postsEndpoint = "/posts"
 const signinEndpoint = "/user/signin"
 const signupEndpoint = "/user/signup"
 const searchPostsEndpoint = "/posts/search"
+// const fetchPostEndpoint = "/posts"
 
 // this function fetches posts from the server
 // this function is called by the action creator
 // this is asynchronous, after its completion, 
 // the action object is dispatched to the redux store through the action creator(which is the one that calls this function)
 export const fetchPosts = (page) => {console.log("page received by fetchposts api:", page); return API.get( `${postsEndpoint}?page=${page}` )} 
+
+export const fetchPost = (id) => {console.log("id at fetchpost get api:", id); return API.get(`${postsEndpoint}/${id}`)};
 
 export const createPost = (newPost) => API.post(postsEndpoint, newPost)
 
