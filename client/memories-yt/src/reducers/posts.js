@@ -1,4 +1,4 @@
-import { FETCH_ALL, UPDATE, LIKE, DELETE, CREATE, SEARCH, START_LOADING, END_LOADING } from '../constants/actionTypes'
+import { FETCH_POST, FETCH_ALL, UPDATE, LIKE, DELETE, CREATE, SEARCH, START_LOADING, END_LOADING } from '../constants/actionTypes'
 
 // state always has to be initialized with something, so we set it to an empty array
 const reducer = (state = { isLoading: true, posts: [] }, action) => {
@@ -33,7 +33,6 @@ const reducer = (state = { isLoading: true, posts: [] }, action) => {
                     totalPages: action.payload.totalPages
                 }
             });
-
             // return {
             //     ...state, posts : {posts:action.payload.data,
             //     currentPage:action.payload.currentpage,
@@ -45,6 +44,12 @@ const reducer = (state = { isLoading: true, posts: [] }, action) => {
                 currentPage: action.payload.currentpage,
                 totalPages: action.payload.totalPages
             };
+
+        case FETCH_POST:
+
+            console.log("state in fetchpost:",state);
+            console.log('action in getpost:', action);
+            return {...state, post:action.payload}
 
 
         case CREATE:
