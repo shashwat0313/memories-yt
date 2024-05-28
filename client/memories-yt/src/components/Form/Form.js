@@ -9,11 +9,8 @@ export default function Form({ currentId, setCurrentId}) {
 
     //these classes will be applied later
     const classes = useStyles()
-    // const user = localStorage.getItem('profile')
-    // console.log(user);
 
     const user = useSelector((state)=>{
-        // console.log("appjs state.auth.authData:",state.auth.authData);
         return (state.auth.authData);
       })
 
@@ -81,7 +78,7 @@ export default function Form({ currentId, setCurrentId}) {
 
     return (
 
-        user ? <Paper className={classes.paper}>
+        user ? <Paper className={classes.paper} elevation={6}>
             <form autoComplete="off" noValidate className={`${classes.form} ${classes.root}`} onSubmit={submitHandler}>
                 <Typography variant="h6">
                     {currentId ? "Editing " : "Creating"} a Memory
@@ -152,7 +149,7 @@ export default function Form({ currentId, setCurrentId}) {
 
             </form>
         </Paper> : 
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <Typography variant="h6" align="center">
                 Please sign in to create your own memories and like other's memories.
             </Typography>

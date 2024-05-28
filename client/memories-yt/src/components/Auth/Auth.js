@@ -121,22 +121,6 @@ export default function Auth() {
                         </Grid>
                     </Grid>
 
-                    {/* <GoogleLogin
-                        clientId="1041261791254-mbtvjmn3kep32isbfr7mn6v2fp99ibu8.apps.googleusercontent.com"
-                        render={(renderProps)=>{
-                            <Button 
-                                className={classes.googleButton} 
-                                color="primary" fullWidth 
-                                onClick={renderProps.onClick} 
-                                disabled={renderProps.disabled} 
-                                startIcon={<Icon/>}>
-                            </Button>
-                        }}
-                        onSuccess={googleSuccess}
-                        onFailure={googleFailure}
-                        cookiePolicy="single_host_origin"
-                    ></GoogleLogin> */}
-
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         {isSignup ? "Sign Up" : "Sign in"}
                     </Button>

@@ -1,5 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# vs-extensions in development
+start-clent-server
+
+# batch files
+start_client_server.bat
+
 # dependencies
 /node_modules
 /.pnp

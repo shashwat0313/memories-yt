@@ -102,38 +102,3 @@ export const getPostsBySearchQuery = (query) => async (dispatch) =>{
 // We need the fetch to be done and handled asynchronously
 // for this, the code below will not work, obviously
 // but this is still a valid action creator
-
-// function getPosts(){
-//     return {
-//         type: 'FETCH_ALL',
-//         payload : []
-//     }
-// }
-
-//acting asynchronously
-
-// export function getPosts(){
-//     return async (dispatch) => {
-
-//         try {
-//             //fetchPosts is defined in api's index.js. 
-//             //fetchPosts makes request to the server to get posts
-//             console.log("attempting to fetch 1");
-            
-//             const { data } = await api.fetchPosts();
-//             console.log("attempting to fetch 2");
-            
-//             // now that the payload is received, the dispatch call below will send the action object to the redux store,
-//             dispatch({type:"FETCH_ALL", payload:data})
-//             // then the redux store triggers the reducer function, which then checks the type of the action
-//             // when the type is determined ---
-//             // then the reducer performs the respective logic with/on this payload
-//             // lets say the payload was modified a bit, then this change in payload causes a resultant change in state(which is not yet in effect)
-//             // now the new state(the new payload) is returned to the redux store and the respective states are updated
-
-//         } catch (error) {
-//             console.error("getPosts action creator has some error");
-//         }
-
-//     }
-// }

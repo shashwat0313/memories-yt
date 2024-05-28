@@ -52,13 +52,8 @@ export default function Home() {
     const [searchKeyword, setSearchKeyword] = useState("")
     // tags search will also be supported, for that tags also need state
     const [tags, setTags] = useState([])
-    
-    // if(searchQuery){
-    //     dispatch(getPostsBySearchQuery({ searchQuery, tagsQuery: '' }))
-    // }
 
     function searchKeyDownHandler(e) {
-        // console.log("event e =", e);
         // keyCode 13 means Enter was pressed
 
         if (e.keyCode === 13) {
@@ -96,7 +91,6 @@ export default function Home() {
             // history.push(`/posts/search?searchQuery=${searchKeyword}&tagsQuery=${tags}`)
 
         }
-        
     }
 
     return (
@@ -143,10 +137,11 @@ export default function Home() {
                             </Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        <Paper
-                            elevation={6}>
-                            <Paginate page={page}/>
-                        </Paper>
+                        { !searchKeyword && !tags.length &&
+                            (<Paper elevation={6} className={classes.pagination}>
+                                <Paginate page={page}/>
+                            </Paper>)
+                        }
                     </Grid>
 
                 </Grid>
