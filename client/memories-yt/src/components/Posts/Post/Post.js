@@ -1,6 +1,6 @@
 import React from "react";
 import useStyles from './styles'
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase, Link } from '@material-ui/core'
+import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core'
 import moment from 'moment'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -29,19 +29,11 @@ export default function Post({ post, setCurrentId }) {
     return (
         <>
         <div className={classes.postDetailOverlay} onClick={openPostDetails}>
-        {/* <a onClick={openPostDetails}> */}
-
                 <Card className={classes.card} raised elevation={6}>
-
-                    {/* <ButtonBase className={classes.cardActions} onClick={openPostDetails}> */}
-
-
-
                     <CardMedia className={classes.media} image={post.selectedFile} title={post.title}></CardMedia>
 
                     <div className={classes.overlay}>
                         <Typography variant="h6">{post.creatorName}</Typography>
-                        {/* below, post.createdAt gives the, well, what it says. then the fromNow returns x minutes ago and so on. moment(...) returns a moment object */}
                         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
 
                     </div>

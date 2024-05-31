@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-
+ 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
-
 const GoogleButton = ({ googleSuccess }) => {
+
+    // TODO
+    // MAKE THIS DEPENDENT ONLY ON USER STATE FRMO REDUX STORE AND AVOID USING USESTATE FOR THE SAME
 
     const [loaded, setLoadState] = useState(false)
     const [isSignedIn, setIsSignedIn] = useState(localStorage.getItem('profile') ? true : false)
@@ -26,6 +28,7 @@ const GoogleButton = ({ googleSuccess }) => {
             console.log('google accounts script loaded');
         })
         document.body.appendChild(googleScriptTag)
+        // eslint-disable-next-line
     }, [user])
 
     useEffect(() => {

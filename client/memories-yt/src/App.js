@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 import { Container } from '@material-ui/core'
 
 import Navbar from './components/Navbar/Navbar'
@@ -7,7 +7,7 @@ import Auth from './components/Auth/Auth'
 import PostDetails from './components/PostDetails/PostDetails'
 
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
-import { jwtDecode, verify } from 'jwt-decode'
+import { jwtDecode} from 'jwt-decode'
 import { useDispatch, useSelector } from 'react-redux'
 import { LOGOUT } from './constants/actionTypes'
 
@@ -37,6 +37,7 @@ function App() {
         dispatch({type:LOGOUT})
       }
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

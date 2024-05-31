@@ -5,19 +5,22 @@ import axios from 'axios'
 // replace the ip address below with current ip address for testing on other devices on local network
 // const baseURL = process.env.NODE_ENV === 'develpment' ? "http://192.168.29.215:5555" :
 
-let baseURL = "http://localhost:5555";
+let baseURL;
 
-// console.log("process.env.REACT_APP_NODE_ENV=",process.env.REACT_APP_NODE_ENV);
+console.log("process.env.REACT_APP_NODE_ENV=",process.env.REACT_APP_NODE_ENV);
 
-// if(process.env.REACT_APP_NODE_ENV === 'development'){
-//     baseURL = 'http://192.168.29.215:5555'
-// }
-// else if(process.env.REACT_APP_NODE_ENV === 'localdev'){
-//     baseURL = 'http://localhost:5555'
-// }
-// else if (process.env.REACT_APP_NODE_ENV === 'production'){
-//     // TODO --- MENTION PRODUCTION URL HERE
-// } 
+if(process.env.REACT_APP_NODE_ENV === 'development'){
+    baseURL = 'http://192.168.29.215:5555'
+}
+else if (process.env.REACT_APP_NODE_ENV === 'localdev'){
+    baseURL = 'http://localhost:5555'
+}
+else if (process.env.REACT_APP_NODE_ENV === 'production'){
+    // TODO --- MENTION PRODUCTION URL HERE
+} 
+else{
+    baseURL = 'http://localhost:5555'
+}
 
 const API = axios.create({ baseURL })
 // now requests can be called directly on this axios instance
