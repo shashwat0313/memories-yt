@@ -73,13 +73,13 @@ export default function Post({ post, setCurrentId }) {
                     <CardActions className={classes.cardActions}>
 
                         {/* FOR LIKES */}
-                        <Button size="small" disabled={!user} color="primary" onClick={(event) => { event.stopPropagation(); dispatch(likePost(post._id)) }}>
+                        <Button size="small" disabled={!user} color="primary" onClick={(event) => { event.stopPropagation(); dispatch(likePost(post._id, history)) }}>
                             <Likes post={post} user={user} />
                         </Button>
 
                         {/* FOR DELETION */}
                         {/* {isOwner(post) && */}
-                        <Button disabled={isOwner(post)} size="small" color="primary" onClick={(event) => { event.stopPropagation();  dispatch(deletePost(post._id)) }}>
+                        <Button disabled={isOwner(post)} size="small" color="primary" onClick={(event) => { event.stopPropagation();  dispatch(deletePost(post._id, history)) }}>
                             <DeleteIcon fontSize="small" />
                             Delete
                         </Button>

@@ -51,9 +51,9 @@ const reducer = (state = { isLoading: true, posts: [] }, action) => {
             console.log('action in getpost:', action);
             return {...state, post:action.payload}
 
-
+        // just because we do not 
         case CREATE:
-            //TODO
+        //     //TODO
             console.log("create post reducer action:", action);
             console.log("create post reducer state:", state);
             return {...state, posts:[action.payload, ...state.posts.slice(0, -1)]};

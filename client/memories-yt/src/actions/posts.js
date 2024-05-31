@@ -43,7 +43,7 @@ export const getPost = (id) => async (dispatch) => {
 
 
 //this is a function that returns a function(a function that is async) which in the end returns an action through dispatch
-export const createPost = (newPost) => async (dispatch) => {
+export const createPost = (newPost, history) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
@@ -51,6 +51,10 @@ export const createPost = (newPost) => async (dispatch) => {
         // the api then calls axios' post to make a post request to the server
         const { data } = await api.createPost(newPost)
         console.log("data got from reponse on post request: ", data);
+        console.log("id got from reponse on post request: ", data?._id);
+
+        history.push(`/posts/${data._id}`)
+
         dispatch({ type: CREATE, payload: data })
 
         // end loading
@@ -58,36 +62,70 @@ export const createPost = (newPost) => async (dispatch) => {
 
     } catch (error) {
         console.log("error in createpost action creator : ", error);
+        console.log("error.response.status:", error.response.status);
+        if(error?.response?.status === 401){
+            console.log("unauthorized");
+            if(localStorage.getItem('profile')){
+                dispatch({type:'LOGOUT'})
+                history.push('/auth')
+            }
+        }
     }
 }
 
-export const updatePost = (currentId, updatedPost) => async (dispatch) => {
+export const updatePost = (currentId, updatedPost, history) => async (dispatch) => {
     try {
         const response = await api.updatePost(currentId, updatedPost)
         console.log("updated post object:", response.data);
         dispatch({ type: UPDATE, payload: response.data })
     } catch (error) {
         console.log("error in updatepost action creator : ", error);
+        console.log("error.response.status:", error.response.status);
+        if(error?.response?.status === 401){
+            console.log("unauthorized");
+            if(localStorage.getItem('profile')){
+                dispatch({type:'LOGOUT'})
+                history.push('/auth')
+            }
+        }
     }
 }
 
-export const deletePost = (id) => async (dispatch) => {
+export const deletePost = (id, history) => async (dispatch) => {
     try {
         const response = await api.deletePost(id);
         console.log("Response from delete request:", response);
         dispatch({ type: DELETE, payload: { id } })
     } catch (error) {
         console.log("some error occured with delete action creator:", error)
+        console.log("error.response.status:", error.response.status);
+        if(error?.response?.status === 401){
+            console.log("unauthorized");
+            if(localStorage.getItem('profile')){
+                dispatch({type:'LOGOUT'})
+                history.push('/auth')
+            }
+        }
     }
 }
 
-export const likePost = (id) => async (dispatch) => {
+export const likePost = (id, history) => async (dispatch) => {
     try {
         const response = await api.likePost(id)
         console.log("response from like request:", response);
         dispatch({ type: LIKE, payload: response.data })
     } catch (error) {
         console.log("some error occured with like post action creator:", error);
+
+        console.log("error.response.status:", error.response.status);
+        if(error?.response?.status === 401){
+            console.log("unauthorized");
+            if(localStorage.getItem('profile')){
+                dispatch({type:'LOGOUT'})
+                history.push('/auth')
+            }
+        }
+
     }
 }
 

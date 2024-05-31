@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import user from '../models/user.js'
 // import isAuthenticated from '../middleware/auth.js';
 
-const JWT_EXPIRY_PERIOD = "1m"
+const JWT_EXPIRY_PERIOD = "10s"
 
 export async function signin(req, res) {
     console.log("login form received:\n", req.body);

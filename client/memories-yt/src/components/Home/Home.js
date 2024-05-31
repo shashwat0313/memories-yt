@@ -84,6 +84,8 @@ export default function Home() {
             return;
         }
         if(trimmedSearchText || tags){
+            console.log("search text:", searchKeyword);
+            console.log("tags:", tags);
             dispatch(getPostsBySearchQuery({ searchQuery: searchKeyword, tagsQuery: tags.join(',') }))
 
             // DECIDED TO NOT PUSH THIS TO HISTORY AS IT WAS CAUSING ISSUES WITH RENDERING WHEN AVAILING THE SEARCH FEATURE 

@@ -58,7 +58,7 @@ export async function getPost(req, res) {
     const {id} = req.params
 
     postmessage.findById(id).then((post)=>{
-        console.log("post found in fetchpost:", post);
+        // console.log("post found in fetchpost:", post);
         return res.status(200).json(post)
     }).catch((err)=>{
         return res.status(500).json({msg:"some error while finding the posr", errorMessage:err});
@@ -335,7 +335,7 @@ export async function getPostsBySearchQuery (req, res) {
         else postmessage.find(
             {$or: dbQuery }
         ).then((matchingPosts)=>{
-            console.log("matched posts are - " + matchingPosts);
+            // console.log("matched posts are - " + matchingPosts);
             return res.status(200).json(matchingPosts)
         }).catch((error)=>{
             return res.status(500).json({message:`error in searching: ${error}`})

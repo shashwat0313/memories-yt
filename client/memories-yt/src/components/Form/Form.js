@@ -4,11 +4,13 @@ import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import FileBase from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, updatePost } from '../../actions/posts';
+import { useHistory } from "react-router-dom";
 
 export default function Form({ currentId, setCurrentId}) {
 
     //these classes will be applied later
     const classes = useStyles()
+    const history = useHistory()
 
     const user = useSelector((state)=>{
         return (state.auth.authData);
@@ -53,11 +55,16 @@ export default function Form({ currentId, setCurrentId}) {
 
         if (currentId == null) {
             // means no press of triple dot
-            dispatch(createPost(postData))
+            dispatch(createPost(postData, history))
+            // console.log("Post created:", postData);
+            // we are not getting the id here and there is no easy way to get it
+            // instead of doing history.push here, we will do it in the action creator
+            // NEW LEARNING, HISTORY OBJECT MAY BE PASSED TO SOME OTHER FUNCTION FOR LETTING THE
+            // RESPECTIVE FUNCTION DO THE REDIRECTION WHENEVER IT NEEDS TO.
         }
         else {
             //update operation
-            dispatch(updatePost(currentId, postData))
+            dispatch(updatePost(currentId, postData, history))
             setCurrentId(null)
         }
         clearForm()
