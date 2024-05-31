@@ -17,7 +17,7 @@ const GoogleButton = ({ googleSuccess }) => {
     useEffect(() => {
         console.log("issignedin=", isSignedIn);
         if (user) {
-            // window.location.href = '/'
+            window.location.href = '/'
         }
         const googleScriptTag = document.createElement('script')
         googleScriptTag.src = "https://accounts.google.com/gsi/client"
