@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/9d0edccf-dbcb-4767-aa9b-be38f0c22dda/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/memories-server-3",
+    "appService.deploySubpath": "."
+}
