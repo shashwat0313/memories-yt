@@ -62,5 +62,5 @@ jobs:
         with:
           app-name: 'memmsfrontend'
           slot-name: 'Production'
-          package: ./client/memories-yt
+          package: ./
           
