@@ -46,7 +46,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip node-app/release.zip
+        run: unzip release.zip
       
       - name: Login to Azure
         uses: azure/login@v1
@@ -62,4 +62,3 @@ jobs:
           app-name: 'memmsfrontend'
           slot-name: 'Production'
           package: .
-          
