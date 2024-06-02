@@ -1,11 +1,11 @@
+import dotenv from'dotenv'
+dotenv.config()
+
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
-import dotenv from'dotenv'
 import corsConfig from './corsConfig.js'
-
-dotenv.config()
 
 //import routes
 import postRoutes from './routes/posts.js'
@@ -33,9 +33,7 @@ mongoose.connect(mongoURL).then(() => {
     // set server to listen on port when db connection is successful
     app.listen(port, () => {
         console.log("server live on", port);
-    })
-
-}).catch((err) => {
+    })}).catch((err) => {
     console.log("error connecting to mongodb --- ", err);
 })
 //Note
@@ -51,5 +49,6 @@ app.get('/test', (req, res) => {
 })
 
 app.get('/', (req, res) => {
+    console.log("get handler hit.");
     res.send("server is live");
 })

@@ -1,7 +1,7 @@
 {
   "name": "memories-yt",
   "version": "0.1.0",
-  "proxy": "http://localhost:5555",
+  "proxy": "https://wonderful-tree-057831000.5.azurestaticapps.net",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.3",
